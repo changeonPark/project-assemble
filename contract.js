@@ -477,5 +477,5 @@ export let abi = [
     }
  ] // Paste your ABI here
  
- //양성열
+
  export let contractAddress = "0x36244F9AE7e2393aD76153407D2884569e79935F"

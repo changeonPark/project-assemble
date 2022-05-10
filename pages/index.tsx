@@ -1,6 +1,6 @@
 import type { NextPage } from "next"
 import { useMoralis } from "react-moralis"
-
+import Link from "next/link";
 const Home: NextPage = () => {
   const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
     useMoralis()
@@ -38,9 +38,13 @@ const Home: NextPage = () => {
               </div>
             </div>
             <div className="hidden items-center md:flex">
-              <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300">
+              <a href="/" className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300">
                 Ticket
               </a>
+
+              <Link href="/mint" >
+                <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300" >MINT</a>
+              </Link>
               <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300">
                 Info
               </a>
