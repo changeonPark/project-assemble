@@ -45,9 +45,10 @@ const Home: NextPage = () => {
               <Link href="/mint" >
                 <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300" >MINT</a>
               </Link>
-              <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300">
-                Info
-              </a>
+              <Link href="/NFT" >
+                <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300"> NFT</a>
+             
+              </Link>
               <a className="mx-3 cursor-pointer text-lg uppercase text-white hover:text-gray-300">
                 Contact
               </a>
