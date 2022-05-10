@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     }
     const handleChainChanged = (_hexChainId: string) => {
       if (typeof window !== "undefined") {
-        console.log("switched to chain...", _hexChainId)
+        console.log("switched to chain...!", _hexChainId)
         window.location.reload()
       } else {
         console.log("window is undefined")
