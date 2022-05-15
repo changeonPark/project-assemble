@@ -4,6 +4,12 @@ module.exports = {
   content: ["./pages/**/*.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        AeonikL: ["AeonikL"],
+        Aeonik: ["Aeonik"],
+        AeonikM: ["AeonikM"],
+        AeonikB: ["AeonikB"],
+      },
       borderColor: theme => ({
         "signature-color": "#7144FF",
         "placeholder-color": "#e0e0e0",

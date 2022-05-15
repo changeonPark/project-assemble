@@ -2,19 +2,44 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
-body {
-  padding: 0;
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+@font-face {
+  font-family: "AeonikL";
+  src: url("./fonts/Aeonik-Light.otf");
+}
+@font-face {
+  font-family: "Aeonik";
+  src: url("./fonts/Aeonik-Regular.otf");
+}
+@font-face {
+  font-family: "AeonikM";
+  src: url("./fonts/Aeonik-Medium.otf");
+}
+@font-face {
+  font-family: "AeonikB";
+  src: url("./fonts/Aeonik-Bold.otf");
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+@layer base {
+  html,
+  body {
+    padding: 0;
+    margin: 0;
+    font-family: Aeonik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
+      Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
+      sans-serif;
+    background-color: #fdfdfd;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  * {
+    box-sizing: border-box;
+  }
 }
 
-* {
-  box-sizing: border-box;
+@layer components {
+  nav ul li a {
+    @apply hover:underline;
+  }
 }
