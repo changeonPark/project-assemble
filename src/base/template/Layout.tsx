@@ -1,4 +1,4 @@
-import Header from "@base/components/Header"
+import { Header } from "@base/components"
 import Head from "next/head"
 
 interface Props {
@@ -14,7 +14,7 @@ const Layout = ({ children, title, hasHeader }: Props) => {
         <title>{title}</title>
       </Head>
       {hasHeader && <Header />}
-      <main className="lg:pt-24">{children}</main>
+      <main className="pt-24">{children}</main>
     </>
   )
 }
