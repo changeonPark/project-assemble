@@ -13,8 +13,9 @@ const Layout = ({ children, title, hasHeader }: Props) => {
       <Head>
         <title>{title}</title>
       </Head>
+
       {hasHeader && <Header />}
-      <main className="pt-24">{children}</main>
+      <main className="mx-auto max-w-[1440px] pt-24">{children}</main>
     </>
   )
 }

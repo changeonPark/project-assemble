@@ -1,6 +1,7 @@
 import type { NextPage } from "next"
 import { useMoralis } from "react-moralis"
-import { Layout } from "@base/template"
+
+import { Layout } from "@base/components"
 
 const Home: NextPage = () => {
   const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
