@@ -18,6 +18,10 @@
   font-family: "AeonikB";
   src: url("./fonts/Aeonik-Bold.otf");
 }
+@font-face {
+  font-family: "LogoFont";
+  src: url("./fonts/Koulen-Regular.ttf");
+}
 
 @layer base {
   html,
@@ -27,7 +31,7 @@
     font-family: Aeonik, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
       Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
       sans-serif;
-    background-color: #fdfdfd;
+    @apply text-base;
   }
   a {
     color: inherit;
@@ -35,11 +39,5 @@
   }
   * {
     box-sizing: border-box;
-  }
-}
-
-@layer components {
-  nav ul li a {
-    @apply hover:underline;
   }
 }

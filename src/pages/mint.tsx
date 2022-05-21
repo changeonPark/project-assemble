@@ -1,13 +1,14 @@
+import { NextPage } from "next"
 import Link from "next/link"
-import { abi, contractAddress } from "contract"
-import { useEffect, useState } from "react"
-import { useMoralis } from "react-moralis"
-import { Layout } from "@base/template"
 
+import { useMoralis } from "react-moralis"
+import { abi, contractAddress } from "data/contract"
 let Web3 = require("web3")
 declare let window: any
 
-export default function Mint() {
+import { Layout } from "@base/components"
+
+const Mint: NextPage = () => {
   const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
     useMoralis()
   let Web3 = require("web3")
@@ -42,3 +43,5 @@ export default function Mint() {
     </Layout>
   )
 }
+
+export default Mint

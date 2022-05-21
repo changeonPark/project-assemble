@@ -1,7 +1,7 @@
 const defaultTheme = require("tailwindcss/defaultTheme")
 
 module.exports = {
-  content: ["./pages/**/*.{js,jsx,ts,tsx}", "./src/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
@@ -9,18 +9,19 @@ module.exports = {
         Aeonik: ["Aeonik"],
         AeonikM: ["AeonikM"],
         AeonikB: ["AeonikB"],
+        Logo: ["LogoFont"],
       },
       borderColor: theme => ({
-        "signature-color": "#7144FF",
+        signature: "#9F99E6",
         "placeholder-color": "#e0e0e0",
       }),
       backgroundColor: theme => ({
-        "signature-color": "#7144FF",
+        signature: "#9F99E6",
         "black-rgba": "rgba(0, 0, 0, 0.54)",
         "placeholder-color": "#e0e0e0",
       }),
       textColor: theme => ({
-        "signature-color": "#7144FF",
+        signature: "#9F99E6",
         "placeholder-color": "#e0e0e0",
       }),
       animation: {
