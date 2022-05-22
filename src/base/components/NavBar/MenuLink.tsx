@@ -3,10 +3,10 @@ import Link from "next/link"
 import { cls } from "@base/utils"
 
 interface Props {
-  target: "About" | "Gallery" | "Customizing" | "Puzzle" | "Mint" | "Buy"
+  target: "About" | "Gallery" | "Customizing" | "Puzzle" | "Mint"
 }
 
-const MenuList = ({ target }: Props) => {
+const MenuLink = ({ target }: Props) => {
   return (
     <li
       className={cls(
@@ -21,4 +21,5 @@ const MenuList = ({ target }: Props) => {
   )
 }
 
-export default MenuList
+// https://opensea.io/
+export default MenuLink

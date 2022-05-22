@@ -4,7 +4,7 @@ import { cls } from "@base/utils"
 
 import { IconClose, IconMenu } from "@base/icons"
 import UserInfo from "../UserInfo"
-import MenuList from "./MenuList"
+import MenuLink from "./MenuLink"
 
 const NavBar = () => {
   const [toggle, setToggle] = useState<boolean>(false)
@@ -32,47 +32,11 @@ const NavBar = () => {
             "lg:flex-row lg:justify-center lg:gap-5 lg:px-0 lg:text-sm"
           )}
         >
-          <li
-            className={cls(
-              "w-full border-b border-black border-opacity-20 py-4",
-              "lg:border-none lg:py-0"
-            )}
-          >
-            <Link href="/#">
-              <a className="w-full uppercase">About</a>
-            </Link>
-          </li>
-          <li
-            className={cls(
-              "w-full border-b border-black border-opacity-20  py-4",
-              "lg:border-none lg:py-0"
-            )}
-          >
-            <Link href="/#">
-              <a className="w-full uppercase">Gallery</a>
-            </Link>
-          </li>
-          <li
-            className={cls(
-              "w-full border-b border-black border-opacity-20  py-4",
-              "lg:border-none lg:py-0"
-            )}
-          >
-            <Link href="/#">
-              <a className="w-full uppercase">Customizing</a>
-            </Link>
-          </li>
-          <li
-            className={cls(
-              "w-full border-b border-black border-opacity-20 py-4",
-              "lg:border-none lg:py-0"
-            )}
-          >
-            <Link href="/#">
-              <a className="w-full uppercase">Puzzle</a>
-            </Link>
-          </li>
-          <MenuList target="Mint" />
+          <MenuLink target="About" />
+          <MenuLink target="Gallery" />
+          <MenuLink target="Customizing" />
+          <MenuLink target="Puzzle" />
+          <MenuLink target="Mint" />
           <li
             className={cls(
               "w-full border-b border-black border-opacity-20 py-4",
