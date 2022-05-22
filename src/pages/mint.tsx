@@ -17,9 +17,9 @@ const Mint: NextPage = () => {
   const handleChange = (value : any) => {
     // let stringValue = value.target.value ;
     // console.log(typeof(stringValue));
-    // let NumberValue =  BigNumber(value.target.value) ;
+     let NumberValue =  BigNumber(value.target.value) ;
     // console.log(typeof(NumberValue));
-    setAmount(value) ;
+    setAmount(NumberValue) ;
   }
   
   //handleChange(event) {    this.setState({value: event.target.value});  }
