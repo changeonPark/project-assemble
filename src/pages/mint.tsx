@@ -30,7 +30,7 @@ const Mint: NextPage = () => {
   }
 
   return (
-    <Layout title="Minting" hasHeader>
+    <Layout title="Mint" hasHeader>
       <h1>민팅페이지</h1>
       <h2>
         <Link href="/">
