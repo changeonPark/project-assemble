@@ -37,15 +37,14 @@ const NavBar = () => {
           <MenuLink target="Customizing" />
           <MenuLink target="Puzzle" />
           <MenuLink target="Mint" />
+          <MenuLink target="Buy" />
           <li
             className={cls(
               "w-full border-b border-black border-opacity-20 py-4",
               "lg:border-none lg:py-0"
             )}
           >
-            <Link href="/#">
-              <a className="w-full uppercase">Buy</a>
-            </Link>
+            
           </li>
           <UserInfo />
         </ul>

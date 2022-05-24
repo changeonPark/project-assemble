@@ -3,7 +3,7 @@ import Link from "next/link"
 import { cls } from "@base/utils"
 
 interface Props {
-  target: "About" | "Gallery" | "Customizing" | "Puzzle" | "Mint"
+  target: "About" | "Gallery" | "Customizing" | "Puzzle" | "Mint" | "Buy" 
 }
 
 const MenuLink = ({ target }: Props) => {
