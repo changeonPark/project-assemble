@@ -5,6 +5,12 @@ const nextConfig = {
     reactRoot: true,
     scrollRestoration: true,
   },
-}
+  // webpack5: true,
+  // webpack: config => {
+  //   config.resolve.fallback = { fs: false };
 
-module.exports = nextConfig
+  //   return config;
+  // },
+};
+
+module.exports = nextConfig;

@@ -95,7 +95,9 @@ const Buy: NextPage = () => {
             
             <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900" onClick={() => logout()}>
             LogOut
-            </button> 
+            </button>
+            
+             
 
             </>
       )}

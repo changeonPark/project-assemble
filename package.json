@@ -13,6 +13,7 @@
     "@walletconnect/web3-provider": "^1.7.8",
     "@web3auth/web3auth": "^0.9.4",
     "big-number": "^2.0.0",
+    "fs": "^0.0.1-security",
     "magic-sdk": "^8.1.1",
     "moralis": "^1.7.0",
     "next": "12.1.6",
