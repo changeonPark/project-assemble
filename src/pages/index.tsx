@@ -171,7 +171,7 @@ const Home: NextPage = () => {
         /* The JSON the returned hash links to will NOT contain the "pinataMetadata" object above */
         pinataContent: {
             //name: "ysy"
-            name : CM.name,
+        name : CM.name,
             
         description : CM.description,
         image : `ipfs://${res.data.IpfsHash}`,
@@ -273,23 +273,23 @@ const Home: NextPage = () => {
          </p>
 
          <p>
-         <input type="text" id="faceframe" name="faceframe" required placeholder="faceframe" />
+         <input type="text" id="faceframe" name="faceframe" required onChange={handleChange} placeholder="faceframe" />
          </p>
 
          <p>
-         <input type="text" id="hair" name="hair" required placeholder="hair" />
+         <input type="text" id="hair" name="hair" required onChange={handleChange} placeholder="hair" />
          </p>
 
          <p>
-         <input type="text" id="eye" name="eye" required placeholder="eye" />
+         <input type="text" id="eye" name="eye" required onChange={handleChange} placeholder="eye" />
          </p>
 
          <p>
-         <input type="text" id="nose" name="nose" required placeholder="nose" />
+         <input type="text" id="nose" name="nose" required onChange={handleChange} placeholder="nose" />
          </p>
 
          <p>
-         <input type="text" id="mouth" name="mouth" required placeholder="mouth" />
+         <input type="text" id="mouth" name="mouth" required onChange={handleChange} placeholder="mouth" />
          </p>
          
         <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900" onClick={()=>goPin()}>
