@@ -5,6 +5,12 @@ import { Layout } from "@base/components"
 
 import axios from "axios"
 import { useEffect, useRef, useState } from "react"
+import {
+  Cutomizing_M_contractAddress,
+  Cutomizing_M_abi,
+} from "data/cmcontract"
+let Web3 = require("web3")
+declare let window: any
 
 const Home: NextPage = () => {
   const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
@@ -58,14 +64,71 @@ const Home: NextPage = () => {
     }
   }
 
+
+
+
   //TEST for FILE UPLOAD in PINATA
   const testInput = useRef<HTMLInputElement>(null)
-  
+
+  //SafeMint for coutomizing Master piece
+  async function safeMint(tokenURL:any) {
+    //console.log(amount)
+    console.log(isAuthenticated)
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum)
+      let account = user!.get("ethAddress")
+      let contract = new window.web3.eth.Contract(
+        Cutomizing_M_abi,
+        Cutomizing_M_contractAddress
+      )
+      //0.01 이더리움 : 1000000000000000
+      let total_value = 10000000000000000
+
+      await contract.methods
+        .safeMint(tokenURL)
+        .estimateGas({
+          from: account,
+          gas: 6000000,
+          value: total_value,
+        })
+        .then(function (gasAmount: any) {
+          let estmated_gas = gasAmount
+          console.log("gas :" + estmated_gas)
+          contract.methods
+            .safeMint(tokenURL)
+            .send({
+              from: account,
+              gas: estmated_gas,
+              value: total_value,
+            })
+            .on("transactionHash", (txid: any) => {
+              console.log(txid)
+            })
+            .once("allEvents", (allEvents: any) => {
+              console.log(allEvents)
+            })
+            .once("Transfer", (transferEvent: any) => {
+              console.log(transferEvent)
+            })
+            .once("receipt", (receipt: any) => {
+              alert("민팅에 성공하였습니다.")
+            })
+            .on("error", (error: any) => {
+              alert("민팅에 실패하였습니다.")
+              console.log(error)
+            })
+        })
+        .catch(function (error: any) {
+          console.log(error)
+          alert("민팅에 실패하였습니다.")
+        })
+    }
+  }  
   const goPin = () => {
     // Cutomizing Masterpiece 완성품
     const CM = {
       name : name,
-      description : "설명",
+      description : description,
       background : background,
       faceframe : faceframe,
       hair : hair,
@@ -227,11 +290,14 @@ const Home: NextPage = () => {
               console.log(res);
               //alert("민팅에 성공하였습니다.")
               //민팅 함수 연결
+              console.log(res.data.IpfsHash);
+              safeMint("ipfs://${res.data.IpfsHash}");
+              
           })
           .catch(function (err:any) {
             
               console.log(err);
-             // alert("민팅에 실패하였습니다.")
+             alert("Json 파일 업로드에 실패하였습니다.")
              //민팅 함수 연결
           });
       
