@@ -1,5 +1,7 @@
 import { Header } from "@base/components"
 import Head from "next/head"
+import { useEffect } from "react"
+import { toast } from "react-toastify"
 
 interface Props {
   title: string

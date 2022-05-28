@@ -6,23 +6,26 @@ import { Layout } from "@base/components"
 import axios from "axios"
 import { useEffect, useRef, useState } from "react"
 import {
-  Cutomizing_M_contractAddress,
-  Cutomizing_M_abi,
+  Customizing_M_contractAddress,
+  Customizing_M_abi,
 } from "data/cmcontract"
 let Web3 = require("web3")
 declare let window: any
 
+// import { useEffect, useRef } from "react"
+import { dataURItoBlob } from "@base/utils"
+
 const Home: NextPage = () => {
   const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
     useMoralis()
-  const [name,setName] = useState('')
-  const [description,setDescription] = useState('')
-  const [background,setBackground] = useState('')
-  const [faceframe,setfaceframe] = useState('')
-  const [hair,setHair] = useState('')
-  const [eye,setEye] = useState('')    
-  const [nose,setNose] = useState('')
-  const [mouth,setMouth] = useState('')
+  const [name, setName] = useState("")
+  const [description, setDescription] = useState("")
+  const [background, setBackground] = useState("")
+  const [faceFrame, setFaceFrame] = useState("")
+  const [hair, setHair] = useState("")
+  const [eye, setEye] = useState("")
+  const [nose, setNose] = useState("")
+  const [mouth, setMouth] = useState("")
 
   const onClickLogin = () => {
     authenticate({
@@ -30,56 +33,37 @@ const Home: NextPage = () => {
     })
   }
 
-  const handleChange = (value: any) => {
-    // // let stringValue = value.target.value ;
-    // // console.log(typeof(stringValue));
-    //  let NumberValue =  BigNumber(value.target.value) ;
-    // // console.log(typeof(NumberValue));
-
-    // setAmount(NumberValue) ;
-    console.log(value.target.id);
-    if(value.target.id == "name" ){
-      setName(value.target.value);
-    }
-    else if(value.target.id == "description" ){
-      setDescription(value.target.value);
-    }
-    else if(value.target.id == "background" ){
-      setBackground(value.target.value);
-    }
-    else if(value.target.id == "faceframe" ){
-      setfaceframe(value.target.value);
-    }
-    else if(value.target.id == "hair" ){
-      setHair(value.target.value);
-    }
-    else if(value.target.id == "eye" ){
-      setEye(value.target.value);
-    }
-    else if(value.target.id == "nose" ){
-      setNose(value.target.value);
-    }
-    else if(value.target.id == "mouth" ){
-      setMouth(value.target.value);
-    }
-  }
-
-
-
-
   //TEST for FILE UPLOAD in PINATA
-  const testInput = useRef<HTMLInputElement>(null)
+  const testInput = useRef<HTMLCanvasElement>(null)
+
+  useEffect(() => {
+    if (!testInput.current || !isAuthenticated) return
+    const context = testInput.current.getContext("2d")
+
+    const image1 = new Image()
+    const image2 = new Image()
+    image1.crossOrigin = "Anonymous"
+    image2.crossOrigin = "Anonymous"
+
+    image1.src = "img/test.png"
+    image1.onload = () => {
+      context?.drawImage(image1, 0, 0)
+    }
+    image2.src =
+      "https://yt3.ggpht.com/ytc/AKedOLQbGU7E36ebO2GboqjekjMHShyKDB4cXao0TbDi0A=s900-c-k-c0x00ffffff-no-rj"
+    image2.onload = () => {
+      context?.drawImage(image2, 100, 100, 100, 100)
+    }
+  }, [testInput, isAuthenticated])
 
   //SafeMint for coutomizing Master piece
-  async function safeMint(tokenURL:any) {
-    //console.log(amount)
-    console.log(isAuthenticated)
+  async function safeMint(tokenURL: any) {
     if (window.ethereum) {
       window.web3 = new Web3(window.ethereum)
       let account = user!.get("ethAddress")
       let contract = new window.web3.eth.Contract(
-        Cutomizing_M_abi,
-        Cutomizing_M_contractAddress
+        Customizing_M_abi,
+        Customizing_M_contractAddress
       )
       //0.01 이더리움 : 1000000000000000
       let total_value = 10000000000000000
@@ -123,30 +107,38 @@ const Home: NextPage = () => {
           alert("민팅에 실패하였습니다.")
         })
     }
-  }  
-  const goPin = () => {
-    // Cutomizing Masterpiece 완성품
+  }
+
+  const goPin = async () => {
+    //   // Cutomizing Masterpiece 완성품
     const CM = {
-      name : name,
-      description : description,
-      background : background,
-      faceframe : faceframe,
-      hair : hair,
-      eye : eye,
-      nose : nose,
-      mouth : mouth
+      name: name,
+      description: description,
+      background: background,
+      faceframe: faceFrame,
+      hair: hair,
+      eye: eye,
+      nose: nose,
+      mouth: mouth,
     }
-    console.log("Start Upload IMG FILE");
+
+    console.log("Start Upload IMG FILE")
+
+    if (!testInput.current) return
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`
 
     const data = new FormData()
-    if (testInput.current?.files){
-      console.log("test");
-      console.log(typeof(testInput.current.files[0]));
-      console.log(testInput.current.files[0]);
-      data.append("file", testInput.current.files[0])
-    }
-     
+    //https://gateway.pinata.cloud/ipfs/QmYH9S5XtH83MS6dJyCRXvPUx2nnKEfqtcBS6nm7gSpyR8
+    //https://yt3.ggpht.com/ytc/AKedOLQbGU7E36ebO2GboqjekjMHShyKDB4cXao0TbDi0A=s900-c-k-c0x00ffffff-no-rj
+
+    //Img Data 에 추가 과정
+    const canvasResult = testInput.current.toDataURL("image/png")
+    const uploadImg = dataURItoBlob(canvasResult)
+    data.append("file", uploadImg)
+
+    console.log(uploadImg)
+
+    //피나타 내부 메타 데이터 data에 추가
     const metadata = JSON.stringify({
       name: "moko2",
       keyvalues: {
@@ -155,212 +147,211 @@ const Home: NextPage = () => {
       },
     })
 
-    data.append("pinataMetadata", metadata)
-    console.log(data)
-
-    return axios
-      .post(url, data, {
-        maxBodyLength: Infinity,
-        headers: {
-          pinata_api_key: process.env.NEXT_PUBLIC_PIN_KEY!,
-          pinata_secret_api_key: process.env.NEXT_PUBLIC_PIN_SECRET_KEY!,
-        },
-      })
-      .then(function(res:any) {
-        //피나타 IPFS cid 값
-        console.log(res.data.IpfsHash)
-        // res.data.IpfsHash == 이미지 IPFS cid
-
-        //Json 작성
-        /*
-        필요한 데이터
-        "name" = 사용자지정 String + #tokenId
-        "description" = 사용자지정 String
-        "image" = "ipfs://${res.data.IpfsHash}"
-        "attributes" : 
-        [
-          {
-            "trait_type" : "background",
-            "value" : "black"
+    return (
+      axios
+        .post(url, data, {
+          maxBodyLength: Infinity,
+          headers: {
+            "Content-Type": `multipart/form-data`,
+            pinata_api_key: process.env.NEXT_PUBLIC_PIN_KEY!,
+            pinata_secret_api_key: process.env.NEXT_PUBLIC_PIN_SECRET_KEY!,
           },
+        })
+        //피나타 사진 업로드 성공
+        .then(function (res: any) {
+          //피나타 IPFS cid 값
+          console.log(res.data.IpfsHash)
+          // res.data.IpfsHash == 이미지 IPFS cid
+          const JSONBody = {
+            /* The "pinataMetadata" object will not be part of your content added to IPFS */
+            /* Pinata simply stores the metadata provided to help you easily query your JSON object pins */
+            pinataOptions: {
+              cidVersion: 0,
+              customPinPolicy: 0,
+            },
+            pinataMetadata: {
+              name: CM.name,
+              keyvalues: {
+                customKey: "sample",
+                customKey2: "sample2",
+              },
+            },
+            /* The contents of the "pinataContent" object will be added to IPFS */
+            /* The hash provided back will only represent the JSON contained in this object */
+            /* The JSON the returned hash links to will NOT contain the "pinataMetadata" object above */
+            pinataContent: {
+              name: CM.name,
+              description: CM.description,
+              image: `ipfs://${res.data.IpfsHash}`,
+              attributes: [
+                {
+                  trait_type: "background",
+                  value: CM.background,
+                },
 
-          {
-            "trait_type" : "faceframe",
-            "value" : "circle"
-          },
+                {
+                  trait_type: "faceframe",
+                  value: CM.faceframe,
+                },
 
-          {
-            "trait_type" : "hair",
-            "value" : "curly"
-          },
+                {
+                  trait_type: "hair",
+                  value: CM.hair,
+                },
 
-          {
-            "trait_type" : "eye",
-            "value" : sunglass
-          },
+                {
+                  trait_type: "eye",
+                  value: CM.eye,
+                },
 
-          {
-            "trait_type" : "nose",
-            "value" : "high"
-          },
-          
-          {
-            "trait_type" : "mouth",
-            "value" : "sexy"
+                {
+                  trait_type: "nose",
+                  value: CM.nose,
+                },
+
+                {
+                  trait_type: "mouth",
+                  value: CM.mouth,
+                },
+              ],
+            },
           }
-    
-          
-        ]
-    
-        
-        */
-      const JSONBody = 
-      {
-      /* The "pinataMetadata" object will not be part of your content added to IPFS */
-      /* Pinata simply stores the metadata provided to help you easily query your JSON object pins */
-        pinataOptions: {
-          cidVersion: 0,
-          customPinPolicy: 0
-        },
-        pinataMetadata: {
-          name: CM.name,
-          keyvalues: {
-              customKey: "sample",
-              customKey2: "sample2"
-          }
-        },
-        /* The contents of the "pinataContent" object will be added to IPFS */
-        /* The hash provided back will only represent the JSON contained in this object */
-        /* The JSON the returned hash links to will NOT contain the "pinataMetadata" object above */
-        pinataContent: {
-            //name: "ysy"
-        name : CM.name,
-            
-        description : CM.description,
-        image : `ipfs://${res.data.IpfsHash}`,
 
-        attributes : 
-        [
-          {
-            "trait_type" : "background",
-            "value" : CM.background
-          },
+          console.log("Start Upload Json FILE")
+          const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`
 
-          {
-            "trait_type" : "faceframe",
-            "value" : CM.faceframe
-          },
-
-          {
-            "trait_type" : "hair",
-            "value" : CM.hair
-          },
-
-          {
-            "trait_type" : "eye",
-            "value" : CM.eye
-          },
-
-          {
-            "trait_type" : "nose",
-            "value" : CM.nose
-          },
-          
-          {
-            "trait_type" : "mouth",
-            "value" : CM.mouth
-          }
-    
-          
-        ]
-        }
-      }
-      
-      console.log("Start Upload Json FILE");
-      const url = `https://api.pinata.cloud/pinning/pinJSONToIPFS`;
-
-      return axios
-          .post(url, JSONBody, {
+          return axios
+            .post(url, JSONBody, {
               headers: {
                 pinata_api_key: process.env.NEXT_PUBLIC_PIN_KEY!,
                 pinata_secret_api_key: process.env.NEXT_PUBLIC_PIN_SECRET_KEY!,
-              }
-          })
-          .then(function (res:any) {
-              console.log(res);
+              },
+            })
+            .then(function (res: any) {
+              console.log(res)
               //alert("민팅에 성공하였습니다.")
               //민팅 함수 연결
-              console.log(res.data.IpfsHash);
-              safeMint("ipfs://${res.data.IpfsHash}");
-              
-          })
-          .catch(function (err:any) {
-            
-              console.log(err);
-             alert("Json 파일 업로드에 실패하였습니다.")
-             //민팅 함수 연결
-          });
-      
+              console.log(res.data.IpfsHash)
+              safeMint(`ipfs://${res.data.IpfsHash}`)
+            })
+            .catch(function (err: any) {
+              console.log(err)
+              alert("Json 파일 업로드에 실패하였습니다.")
+              //민팅 함수 연결
+            })
         })
-      .catch(function(err:any){
-        console.log("err")
-      })
+        .catch(function (err: any) {
+          console.log("err")
+        })
+    )
   }
 
   return (
     <Layout title="Home" hasHeader>
       {!isAuthenticated ? (
-        <>
-         
-          <button
-            className="mt-10 block bg-gray-800 py-3 px-4 text-lg uppercase text-white hover:bg-gray-900"
-            onClick={() => onClickLogin()}
-          >
-            Login
-          </button>
-        </>
+        <button
+          className="mt-10 block bg-gray-800 py-3 px-4 text-lg uppercase text-white hover:bg-gray-900"
+          onClick={() => onClickLogin()}
+        >
+          Login
+        </button>
       ) : (
         <>
-        <input
-        type="file"
-        ref={testInput}
-         />
+          <p>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              onChange={e => setName(e.target.value)}
+              placeholder="name"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="name" name="name" required onChange={handleChange} placeholder="name" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="description"
+              name="description"
+              required
+              onChange={e => setDescription(e.target.value)}
+              placeholder="description"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="description" name="description" required onChange={handleChange} placeholder="description" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="background"
+              name="background"
+              required
+              onChange={e => setBackground(e.target.value)}
+              placeholder="background"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="background" name="background" required onChange={handleChange} placeholder="background" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="faceframe"
+              name="faceframe"
+              required
+              onChange={e => setFaceFrame(e.target.value)}
+              placeholder="faceframe"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="faceframe" name="faceframe" required onChange={handleChange} placeholder="faceframe" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="hair"
+              name="hair"
+              required
+              onChange={e => setHair(e.target.value)}
+              placeholder="hair"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="hair" name="hair" required onChange={handleChange} placeholder="hair" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="eye"
+              name="eye"
+              required
+              onChange={e => setEye(e.target.value)}
+              placeholder="eye"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="eye" name="eye" required onChange={handleChange} placeholder="eye" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="nose"
+              name="nose"
+              required
+              onChange={e => setNose(e.target.value)}
+              placeholder="nose"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="nose" name="nose" required onChange={handleChange} placeholder="nose" />
-         </p>
+          <p>
+            <input
+              type="text"
+              id="mouth"
+              name="mouth"
+              required
+              onChange={e => setMouth(e.target.value)}
+              placeholder="mouth"
+            />
+          </p>
 
-         <p>
-         <input type="text" id="mouth" name="mouth" required onChange={handleChange} placeholder="mouth" />
-         </p>
-         
-        <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900" onClick={()=>goPin()}>
-         goPin
-        </button>
+          <button
+            className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900"
+            onClick={() => goPin()}
+          >
+            goPin
+          </button>
+          <canvas ref={testInput} width="300" height="300"></canvas>
         </>
       )}
     </Layout>
