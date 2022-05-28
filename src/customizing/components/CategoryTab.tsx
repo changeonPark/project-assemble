@@ -1,5 +1,5 @@
 import { Tab } from "@headlessui/react"
-import { CategoryType } from "gallery"
+import { CategoryType } from "customizing"
 import { Dispatch, SetStateAction } from "react"
 
 function classNames(...classes: string[]) {
@@ -9,7 +9,7 @@ interface Props {
   onClick: Dispatch<SetStateAction<CategoryType>>
 }
 
-const tabValues = ["CUSTOMIZING", "PUZZLE"]
+const tabValues = ["PIECE", "MASTERPIECE"]
 
 const CategoryTab = ({ onClick }: Props) => {
   return (
@@ -20,7 +20,7 @@ const CategoryTab = ({ onClick }: Props) => {
             key={item}
             className={({ selected }) =>
               classNames(
-                "w-full truncate rounded-lg px-2 py-2 text-sm text-xs leading-5 text-black md:text-base",
+                "w-full rounded-lg px-2 py-2 text-sm leading-5 text-black",
                 "lg:py-3 lg:text-xl",
                 "ring-white ring-opacity-60 ring-offset-1 ring-offset-white focus:outline-none focus:ring-2",
                 selected ? "bg-signature shadow" : "hover:bg-white/[0.12]"

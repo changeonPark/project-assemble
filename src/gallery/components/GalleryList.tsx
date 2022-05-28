@@ -39,6 +39,8 @@ const GalleryList = ({ category }: Props) => {
     return result
   }
 
+  //Customizing Piece 
+
   return (
     <div
       className={cls(
