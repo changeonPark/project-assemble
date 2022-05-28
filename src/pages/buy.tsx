@@ -1,6 +1,6 @@
 import { Layout } from "@base/components"
 import { NextPage } from "next"
-import { testAuthentication } from "./api/pinata"
+
 import {
   Customizing_M_contractAddress,
   Customizing_M_abi,

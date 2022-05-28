@@ -20,12 +20,14 @@ const Mint: NextPage = () => {
   const [amount, setAmount] = useState(0)
   //Amount Input Number 핸들러
   const handleChange = (value: any) => {
+    // console.log("handleChange")
+    // console.log("value.target.value", value.target.value)
     // let stringValue = value.target.value ;
-    // console.log(typeof(stringValue));
-    let NumberValue = BigNumber(value.target.value)
-    // console.log(typeof(NumberValue));
+    // console.log(typeof stringValue)
+    // let NumberValue = BigNumber(value.target.value)
+    // console.log(typeof NumberValue)
 
-    setAmount(NumberValue)
+    setAmount(value.target.value)
   }
 
   //handleChange(event) {    this.setState({value: event.target.value});  }
@@ -106,7 +108,7 @@ const Mint: NextPage = () => {
         </button>
       ) : (
         <>
-          <h1>민팅페이지</h1>
+          <h1>커스터마이징 퍼즐 조각 민팅페이지</h1>
           <h2>
             <Link href="/">
               <a>홈으로 돌아가기</a>
