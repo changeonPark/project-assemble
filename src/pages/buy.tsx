@@ -1,9 +1,9 @@
 import { Layout } from "@base/components"
 import { NextPage } from "next"
-import {testAuthentication} from "./api/pinata"
+import { testAuthentication } from "./api/pinata"
 import {
-  Cutomizing_M_contractAddress,
-  Cutomizing_M_abi,
+  Customizing_M_contractAddress,
+  Customizing_M_abi,
 } from "data/cmcontract"
 import { useMoralis } from "react-moralis"
 import { useEffect, useState } from "react"
@@ -11,12 +11,10 @@ let Web3 = require("web3")
 declare let window: any
 //pinata api
 
-
-
-
 const Buy: NextPage = () => {
-  const { isAuthenticated, authenticate, user, logout, isLoggingOut } = useMoralis()
-    //민팅 함수
+  const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
+    useMoralis()
+  //민팅 함수
   async function safeMint() {
     //console.log(amount)
     console.log(isAuthenticated)
@@ -24,14 +22,16 @@ const Buy: NextPage = () => {
       window.web3 = new Web3(window.ethereum)
       let account = user!.get("ethAddress")
       let contract = new window.web3.eth.Contract(
-        Cutomizing_M_abi,
-        Cutomizing_M_contractAddress
+        Customizing_M_abi,
+        Customizing_M_contractAddress
       )
       //0.01 이더리움 : 1000000000000000
       let total_value = 10000000000000000
 
       await contract.methods
-        .safeMint("ipfs://Qme9XnmsaBjaRWtg2We5CueNgPzt7ioJSKipgUnfzQBMWd/1.json")
+        .safeMint(
+          "ipfs://Qme9XnmsaBjaRWtg2We5CueNgPzt7ioJSKipgUnfzQBMWd/1.json"
+        )
         .estimateGas({
           from: account,
           gas: 6000000,
@@ -41,7 +41,9 @@ const Buy: NextPage = () => {
           let estmated_gas = gasAmount
           console.log("gas :" + estmated_gas)
           contract.methods
-            .safeMint("ipfs://Qme9XnmsaBjaRWtg2We5CueNgPzt7ioJSKipgUnfzQBMWd/1.json")
+            .safeMint(
+              "ipfs://Qme9XnmsaBjaRWtg2We5CueNgPzt7ioJSKipgUnfzQBMWd/1.json"
+            )
             .send({
               from: account,
               gas: estmated_gas,
@@ -75,7 +77,7 @@ const Buy: NextPage = () => {
       signingMessage: "프론트 킹 박찬건!!존경!",
     })
   }
-  
+
   return (
     <Layout title="Home" hasHeader>
       {!isAuthenticated ? (
@@ -86,20 +88,20 @@ const Buy: NextPage = () => {
           Login
         </button>
       ) : (
-             <>
-             <h1>민팅페이지</h1>
+        <>
+          <h1>민팅페이지</h1>
 
-                 <button className="lg:ml-4" onClick={() => safeMint()}>
-                   safeMint
-                 </button>
-            
-            <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900" onClick={() => logout()}>
+          <button className="lg:ml-4" onClick={() => safeMint()}>
+            safeMint
+          </button>
+
+          <button
+            className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900"
+            onClick={() => logout()}
+          >
             LogOut
-            </button>
-            
-             
-
-            </>
+          </button>
+        </>
       )}
     </Layout>
   )

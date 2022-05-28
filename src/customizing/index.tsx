@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react"
-import { CategoryTab } from "./components"
-import CutomizingList from "./components/CutomizingList"
+import { CategoryTab, CustomizingList } from "./components"
 
 export type CategoryType = "PIECE" | "MASTERPIECE"
 
-const CustoMizingContainer = () => {
+const CustomizingContainer = () => {
   const [category, setCategory] = useState<CategoryType>("PIECE")
 
   useEffect(() => {
@@ -22,9 +21,9 @@ const CustoMizingContainer = () => {
           <span>MY COLLECTION</span>
         </div>
       </div>
-      <CutomizingList category={category} />
+      <CustomizingList category={category} />
     </section>
   )
 }
 
-export default CustoMizingContainer
+export default CustomizingContainer

@@ -1,13 +1,11 @@
 import { NextPage } from "next"
 import Link from "next/link"
-
 import { useMoralis } from "react-moralis"
 import {
   Cutomizing_piece_contractAddress,
   Cutomizing_piece_abi,
 } from "data/contract"
-import { useEffect, useState } from "react"
-let Web3 = require("web3")
+import { useState } from "react"
 declare let window: any
 import { Layout } from "@base/components"
 
@@ -95,7 +93,7 @@ const Mint: NextPage = () => {
   }
 
   return (
-    <Layout title="Home" hasHeader>
+    <Layout title="Mint" hasHeader>
       {!isAuthenticated ? (
         <button
           className="mt-10 block bg-gray-800 py-3 px-4 text-lg uppercase text-white hover:bg-gray-900"
