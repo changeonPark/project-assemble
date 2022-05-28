@@ -13,18 +13,18 @@ import { Layout } from "@base/components"
 
 var BigNumber = require("big-number")
 const Mint: NextPage = () => {
-  const { isAuthenticated, authenticate, user, logout, isLoggingOut } = useMoralis()
+  const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
+    useMoralis()
   let Web3 = require("web3")
   const [amount, setAmount] = useState(0)
   //Amount Input Number 핸들러
   const handleChange = (value: any) => {
     // let stringValue = value.target.value ;
     // console.log(typeof(stringValue));
-     let NumberValue =  BigNumber(value.target.value) ;
+    let NumberValue = BigNumber(value.target.value)
     // console.log(typeof(NumberValue));
 
-    setAmount(NumberValue) ;
-
+    setAmount(NumberValue)
   }
 
   //handleChange(event) {    this.setState({value: event.target.value});  }
@@ -85,7 +85,7 @@ const Mint: NextPage = () => {
 
   function test() {
     console.log(typeof amount)
-    console.log(isAuthenticated);
+    console.log(isAuthenticated)
   }
 
   const onClickLogin = () => {
@@ -94,9 +94,6 @@ const Mint: NextPage = () => {
     })
   }
 
-  
-
-  
   return (
     <Layout title="Home" hasHeader>
       {!isAuthenticated ? (
@@ -107,41 +104,42 @@ const Mint: NextPage = () => {
           Login
         </button>
       ) : (
-             <>
-             <h1>민팅페이지</h1>
-                <h2>
-                  <Link href="/">
-                    <a>홈으로 돌아가기</a>
-                  </Link>
-                 </h2>
-                <form>
-                 <label>Amount (1 to 10 number):</label>
-                 <p>
-                    <input
-                      type="number"
-                      step={1}
-                      onChange={handleChange}
-                      id="amount"
-                      name="amount"
-                      placeholder="1"
-                     />
-                 </p>
-                 </form>
-                 <button className="lg:ml-4" onClick={() => publicMint()}>
-                   Mint
-                 </button>
-            {/* <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900">
+        <>
+          <h1>민팅페이지</h1>
+          <h2>
+            <Link href="/">
+              <a>홈으로 돌아가기</a>
+            </Link>
+          </h2>
+          <form>
+            <label>Amount (1 to 10 number):</label>
+            <p>
+              <input
+                type="number"
+                step={1}
+                onChange={handleChange}
+                id="amount"
+                name="amount"
+                placeholder="1"
+              />
+            </p>
+          </form>
+          <button className="lg:ml-4" onClick={() => publicMint()}>
+            Mint
+          </button>
+          {/* <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900">
               {user?.get("ethAddress")}
             </button> */}
-            <button className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900" onClick={() => logout()}>
+          <button
+            className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900"
+            onClick={() => logout()}
+          >
             LogOut
-            </button> 
-
-            </>
+          </button>
+        </>
       )}
     </Layout>
   )
-  
 }
 
 export default Mint
