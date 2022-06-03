@@ -1,7 +1,7 @@
 import Image from "next/image"
 
 import { cls } from "@base/utils"
-import { CategoryType } from "customizing"
+import { CategoryType } from "puzzle"
 import { useNFTBalances } from "react-moralis"
 import { useMoralis } from "react-moralis"
 import { Cutomizing_piece_contractAddress } from "data/contract"
@@ -17,7 +17,7 @@ interface Props {
   category: CategoryType
 }
 
-const CustomizingList = ({ category }: Props) => {
+const PuzzleList = ({ category }: Props) => {
   const { getNFTBalances, data } = useNFTBalances()
   const { isAuthenticated, authenticate, user, logout, isLoggingOut } =
     useMoralis()
@@ -25,17 +25,17 @@ const CustomizingList = ({ category }: Props) => {
   const [nftList, setNFTList] = useState([])
 
   //Moralist NFT 가져오기
-  useEffect(() => {
-    getNFTBalances({
-      params: {
-        chain: "rinkeby",
-        address: user!.get("ethAddress"),
-      },
-    })
-    // data?.result?.map((nft: any, index) => {
-    //   console.log("in useEffect", nft)
-    // })
-  }, [])
+  // useEffect(() => {
+  //   getNFTBalances({
+  //     params: {
+  //       chain: "rinkeby",
+  //       address: user!.get("ethAddress"),
+  //     },
+  //   })
+  //   // data?.result?.map((nft: any, index) => {
+  //   //   console.log("in useEffect", nft)
+  //   // })
+  // }, [])
 
   const Web3Api = useMoralisWeb3Api()
 
@@ -75,7 +75,7 @@ const CustomizingList = ({ category }: Props) => {
           <div className="relative h-full min-h-[150px] w-full min-w-[150px]">
             <Image
               src={
-                category === "PIECE"
+                category === "NewPicture"
                   ? "/img/custom-dummy.png"
                   : "/img/puzzle-dummy.png"
               }
@@ -111,7 +111,10 @@ const CustomizingList = ({ category }: Props) => {
       //카테고리 별 contractAddress 수정
       var contractAddress = ""
       contractAddress = Cutomizing_piece_contractAddress
-      if (category === "PIECE") {
+      //"NewPicture" | "MyStatus"
+      if (category === "NewPicture") {
+        //listDummy(category)
+        //return
         contractAddress = Cutomizing_piece_contractAddress
         // contractAddress = Customizing_M_contractAddress
       } else {
@@ -132,27 +135,25 @@ const CustomizingList = ({ category }: Props) => {
                       className="fade-in flex cursor-pointer flex-col items-center"
                       key={index}
                     >
-                     
-                        {/* <span className="text-xs">{nft.image}</span> */}
+                      <div className="relative h-full min-h-[150px] w-full min-w-[150px]">
+                        <span className="text-xs">{nft.image}</span>
                         {nft.image ? (
-                          <>
-                           <div className="relative h-full min-h-[150px] w-full min-w-[150px]">
+                          <p>
                             <Image
                               src={nft.image}
                               alt="ghostLoad"
                               layout="fill"
                               className="z-0 rounded-lg object-contain"
                             />
-                            </div>
                             <span className="mt-2 mb-[6px] text-sm">
                               No. {index}
                             </span>
                             <span className="text-xs">
                               {category} #{index}
                             </span>
-                          </>
+                          </p>
                         ) : (
-                          <>
+                          <p>
                             <label>토큰URI:{nft.token_uri} </label>
                             <span className="mt-2 mb-[6px] text-sm">
                               No. {index}
@@ -160,9 +161,9 @@ const CustomizingList = ({ category }: Props) => {
                             <span className="text-xs">
                               {category} #{index}
                             </span>
-                          </>
+                          </p>
                         )}
-                      
+                      </div>
                     </div>
                   </>
                 )}
@@ -187,7 +188,7 @@ const CustomizingList = ({ category }: Props) => {
       //카테고리 별 contractAddress 수정
       var contractAddress = ""
       contractAddress = Cutomizing_piece_contractAddress
-      if (category === "PIECE") {
+      if (category === "NewPicture") {
         contractAddress = Cutomizing_piece_contractAddress
         // contractAddress = Customizing_M_contractAddress
       } else {
@@ -260,9 +261,9 @@ const CustomizingList = ({ category }: Props) => {
         "lg:grid-cols-4 lg:gap-[26px]"
       )}
     >
-      {listNFT(category)}
+      {listDummy(category)}
     </div>
   )
 }
 
-export default CustomizingList
+export default PuzzleList

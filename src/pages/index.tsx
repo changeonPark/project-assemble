@@ -1,6 +1,6 @@
 import type { NextPage } from "next"
 import { useMoralis } from "react-moralis"
-
+import Moralis from "moralis"
 import { Layout } from "@base/components"
 
 import axios from "axios"
@@ -124,7 +124,6 @@ const Home: NextPage = () => {
 
     console.log("Start Upload IMG FILE")
 
-    if (!testInput.current) return
     const url = `https://api.pinata.cloud/pinning/pinFileToIPFS`
 
     const data = new FormData()
@@ -132,6 +131,7 @@ const Home: NextPage = () => {
     //https://yt3.ggpht.com/ytc/AKedOLQbGU7E36ebO2GboqjekjMHShyKDB4cXao0TbDi0A=s900-c-k-c0x00ffffff-no-rj
 
     //Img Data 에 추가 과정
+    if (!testInput.current) return
     const canvasResult = testInput.current.toDataURL("image/png")
     const uploadImg = dataURItoBlob(canvasResult)
     data.append("file", uploadImg)
@@ -140,12 +140,14 @@ const Home: NextPage = () => {
 
     //피나타 내부 메타 데이터 data에 추가
     const metadata = JSON.stringify({
-      name: "moko2",
+      name: CM.name,
       keyvalues: {
-        color: "1234",
-        skin: "aman",
+        color: "7777",
+        skin: "7777",
       },
     })
+
+    data.append("pinataMetadata", metadata)
 
     return (
       axios
@@ -169,6 +171,7 @@ const Home: NextPage = () => {
               cidVersion: 0,
               customPinPolicy: 0,
             },
+
             pinataMetadata: {
               name: CM.name,
               keyvalues: {
@@ -176,6 +179,7 @@ const Home: NextPage = () => {
                 customKey2: "sample2",
               },
             },
+
             /* The contents of the "pinataContent" object will be added to IPFS */
             /* The hash provided back will only represent the JSON contained in this object */
             /* The JSON the returned hash links to will NOT contain the "pinataMetadata" object above */
@@ -186,34 +190,34 @@ const Home: NextPage = () => {
               attributes: [
                 {
                   trait_type: "background",
-                  value: CM.background,
+                  value: CM.background
                 },
 
                 {
                   trait_type: "faceframe",
-                  value: CM.faceframe,
+                  value: CM.faceframe
                 },
 
                 {
                   trait_type: "hair",
-                  value: CM.hair,
+                  value: CM.hair
                 },
 
                 {
                   trait_type: "eye",
-                  value: CM.eye,
+                  value: CM.eye
                 },
 
                 {
                   trait_type: "nose",
-                  value: CM.nose,
+                  value: CM.nose
                 },
 
                 {
                   trait_type: "mouth",
-                  value: CM.mouth,
-                },
-              ],
+                  value: CM.mouth
+                }
+              ]
             },
           }
 
@@ -232,6 +236,7 @@ const Home: NextPage = () => {
               //alert("민팅에 성공하였습니다.")
               //민팅 함수 연결
               console.log(res.data.IpfsHash)
+              console.log("METAData",JSONBody);
               safeMint(`ipfs://${res.data.IpfsHash}`)
             })
             .catch(function (err: any) {
@@ -246,6 +251,12 @@ const Home: NextPage = () => {
     )
   }
 
+  async function buyCrypto(){
+    await Moralis.initPlugins()
+    Moralis.Plugins.fiat.buy();
+
+  }
+  
   return (
     <Layout title="Home" hasHeader>
       {!isAuthenticated ? (
@@ -350,6 +361,13 @@ const Home: NextPage = () => {
             onClick={() => goPin()}
           >
             goPin
+          </button>
+          
+          <button
+            className="mt-10 block bg-gray-800 py-3 px-4 text-lg font-bold uppercase text-white hover:bg-gray-900"
+            onClick={() => buyCrypto()}
+          >
+            buyCrypto
           </button>
           <canvas ref={testInput} width="300" height="300"></canvas>
         </>
