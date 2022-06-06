@@ -252,8 +252,10 @@ const PuzzleList = ({ category }: Props) => {
       listDummy(category)
     }
   }
+  
 
   return (
+    
     <div
       className={cls(
         "grid grid-cols-2 gap-[15px]",
@@ -261,6 +263,7 @@ const PuzzleList = ({ category }: Props) => {
         "lg:grid-cols-4 lg:gap-[26px]"
       )}
     >
+      
       {listDummy(category)}
     </div>
   )

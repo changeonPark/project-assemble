@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react"
 import { CategoryTab, PuzzleList } from "./components"
+import Router, { useRouter } from "next/router"
 
 export type CategoryType = "NewPicture" | "MyStatus"
 
 const PuzzleContainer = () => {
   const [category, setCategory] = useState<CategoryType>("NewPicture")
+  const router = useRouter()
 
   useEffect(() => {
     console.log(category)
   }, [category])
+
+  const goPuzzleCreatePage = () => {
+    console.log("clicked")
+    router.push("/puzzle_create")
+  }
 
   return (
     <section>
@@ -17,8 +24,12 @@ const PuzzleContainer = () => {
           <CategoryTab onClick={setCategory} />
         </div>
         <div>
-          <span>1000</span>
-          <span>MY COLLECTION</span>
+          <button
+            className="mt-10 block bg-gray-800 py-3 px-4 text-lg uppercase text-white hover:bg-gray-900"
+            onClick={() => goPuzzleCreatePage()}
+          >
+            Upload
+          </button>
         </div>
       </div>
       <PuzzleList category={category} />
