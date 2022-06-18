@@ -4,13 +4,14 @@ import { cls } from "@base/utils"
 import { CategoryType } from "puzzle"
 import { useNFTBalances } from "react-moralis"
 import { useMoralis } from "react-moralis"
-import { Cutomizing_piece_contractAddress } from "data/contract"
-import { Customizing_M_contractAddress } from "data/cmcontract"
+import { Cutomizing_piece_contractAddress_low } from "data/contract"
+import { Puzzle_M_contractAddress_low } from "data/pmcontract"
 import { useEffect, useState } from "react"
 //import Moralis from "moralis"
 import { useMoralisWeb3Api } from "react-moralis"
 
 import React from "react"
+import Router, { useRouter } from "next/router"
 //import { useMoralisWeb3Api } from "react-moralis";
 
 interface Props {
@@ -23,19 +24,22 @@ const PuzzleList = ({ category }: Props) => {
     useMoralis()
 
   const [nftList, setNFTList] = useState([])
-
+  const router = useRouter()
   //Moralist NFT 가져오기
-  // useEffect(() => {
-  //   getNFTBalances({
-  //     params: {
-  //       chain: "rinkeby",
-  //       address: user!.get("ethAddress"),
-  //     },
-  //   })
-  //   // data?.result?.map((nft: any, index) => {
-  //   //   console.log("in useEffect", nft)
-  //   // })
-  // }, [])
+  useEffect(() => {
+    console.log("userEffect Start")
+    console.log(user!.get("ethAddress"))
+    getNFTBalances({
+      params: {
+        chain: "rinkeby",
+        address: user!.get("ethAddress"),
+      },
+    })
+    console.log("UserEffect In data", data)
+    data?.result?.map((nft: any, index) => {
+      console.log("in useEffect", nft)
+    })
+  }, [category])
 
   const Web3Api = useMoralisWeb3Api()
 
@@ -62,6 +66,10 @@ const PuzzleList = ({ category }: Props) => {
 
     // });
   }
+  const clickedImg = (e: any) => {
+    console.log("clicked IMG", e)
+    router.push("/puzzle_game")
+  }
 
   //더미 데이터 적용 예제
   const listDummy = (category: CategoryType) => {
@@ -71,13 +79,14 @@ const PuzzleList = ({ category }: Props) => {
         <div
           className="fade-in flex cursor-pointer flex-col items-center"
           key={i}
+          onClick={e => clickedImg(e)}
         >
           <div className="relative h-full min-h-[150px] w-full min-w-[150px]">
             <Image
               src={
                 category === "NewPicture"
-                  ? "/img/custom-dummy.png"
-                  : "/img/puzzle-dummy.png"
+                  ? "/img/custom-dummy.PNG"
+                  : "/img/puzzle-dummy.PNG"
               }
               //alt="ghostLoad"
               layout="fill"
@@ -107,22 +116,21 @@ const PuzzleList = ({ category }: Props) => {
       //로그인 된 부분 유저가 가지고 있는 것 만 가져오기.
 
       const result: any = []
-
       //카테고리 별 contractAddress 수정
       var contractAddress = ""
-      contractAddress = Cutomizing_piece_contractAddress
+      contractAddress = Puzzle_M_contractAddress_low
       //"NewPicture" | "MyStatus"
       if (category === "NewPicture") {
         //listDummy(category)
         //return
-        contractAddress = Cutomizing_piece_contractAddress
+        contractAddress = Cutomizing_piece_contractAddress_low
         // contractAddress = Customizing_M_contractAddress
       } else {
-        contractAddress = Customizing_M_contractAddress
+        contractAddress = Puzzle_M_contractAddress_low
       }
       //데이터 만들어서 저장 ?
 
-      //console.log(data)
+      console.log("data in listNFT", data)
       {
         data &&
           data?.result?.map((nft: any, index) => (
@@ -141,7 +149,7 @@ const PuzzleList = ({ category }: Props) => {
                           <p>
                             <Image
                               src={nft.image}
-                              alt="ghostLoad"
+                              //alt="ghostLoad"
                               layout="fill"
                               className="z-0 rounded-lg object-contain"
                             />
@@ -187,12 +195,12 @@ const PuzzleList = ({ category }: Props) => {
 
       //카테고리 별 contractAddress 수정
       var contractAddress = ""
-      contractAddress = Cutomizing_piece_contractAddress
+      contractAddress = Cutomizing_piece_contractAddress_low
       if (category === "NewPicture") {
-        contractAddress = Cutomizing_piece_contractAddress
+        contractAddress = Cutomizing_piece_contractAddress_low
         // contractAddress = Customizing_M_contractAddress
       } else {
-        contractAddress = Customizing_M_contractAddress
+        contractAddress = Puzzle_M_contractAddress_low
       }
       fetchNFTsForContract(contractAddress)
       //데이터 만들어서 저장 ?
@@ -252,10 +260,8 @@ const PuzzleList = ({ category }: Props) => {
       listDummy(category)
     }
   }
-  
 
   return (
-    
     <div
       className={cls(
         "grid grid-cols-2 gap-[15px]",
@@ -263,7 +269,7 @@ const PuzzleList = ({ category }: Props) => {
         "lg:grid-cols-4 lg:gap-[26px]"
       )}
     >
-      
+      {/* {listNFT(category)} */}
       {listDummy(category)}
     </div>
   )

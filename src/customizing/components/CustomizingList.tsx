@@ -4,8 +4,8 @@ import { cls } from "@base/utils"
 import { CategoryType } from "customizing"
 import { useNFTBalances } from "react-moralis"
 import { useMoralis } from "react-moralis"
-import { Cutomizing_piece_contractAddress } from "data/contract"
-import { Customizing_M_contractAddress } from "data/cmcontract"
+import { Cutomizing_piece_contractAddress,Cutomizing_piece_contractAddress_low } from "data/contract"
+import { Customizing_M_contractAddress_low } from "data/cmcontract"
 import { useEffect, useState } from "react"
 //import Moralis from "moralis"
 import { useMoralisWeb3Api } from "react-moralis"
@@ -32,6 +32,7 @@ const CustomizingList = ({ category }: Props) => {
         address: user!.get("ethAddress"),
       },
     })
+    console.log('data:',data)
     // data?.result?.map((nft: any, index) => {
     //   console.log("in useEffect", nft)
     // })
@@ -110,16 +111,16 @@ const CustomizingList = ({ category }: Props) => {
 
       //카테고리 별 contractAddress 수정
       var contractAddress = ""
-      contractAddress = Cutomizing_piece_contractAddress
+      contractAddress = Cutomizing_piece_contractAddress_low
       if (category === "PIECE") {
-        contractAddress = Cutomizing_piece_contractAddress
+        contractAddress = Cutomizing_piece_contractAddress_low
         // contractAddress = Customizing_M_contractAddress
       } else {
-        contractAddress = Customizing_M_contractAddress
+        contractAddress = Customizing_M_contractAddress_low
       }
       //데이터 만들어서 저장 ?
 
-      //console.log(data)
+      console.log('data in ListNFT',data)
       {
         data &&
           data?.result?.map((nft: any, index) => (
@@ -186,12 +187,12 @@ const CustomizingList = ({ category }: Props) => {
 
       //카테고리 별 contractAddress 수정
       var contractAddress = ""
-      contractAddress = Cutomizing_piece_contractAddress
+      contractAddress = Cutomizing_piece_contractAddress_low
       if (category === "PIECE") {
-        contractAddress = Cutomizing_piece_contractAddress
+        contractAddress = Cutomizing_piece_contractAddress_low
         // contractAddress = Customizing_M_contractAddress
       } else {
-        contractAddress = Customizing_M_contractAddress
+        contractAddress = Customizing_M_contractAddress_low
       }
       fetchNFTsForContract(contractAddress)
       //데이터 만들어서 저장 ?

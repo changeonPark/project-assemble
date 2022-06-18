@@ -1,5 +1,6 @@
-//Customizing - piece Contract
-export const Cutomizing_piece_abi: any = [
+//0x0E32207E91f72918920B3AeF231e2c328e45Fa25
+//Puzzle - MasterPiece Contract
+export const Puzzle_M_abi: any = [
   {
     inputs: [],
     stateMutability: "nonpayable",
@@ -289,23 +290,29 @@ export const Cutomizing_piece_abi: any = [
     type: "function",
   },
   {
-    inputs: [
-      {
-        internalType: "uint256",
-        name: "requestedCount",
-        type: "uint256",
-      },
-    ],
-    name: "publicMint",
-    outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
-  {
     inputs: [],
     name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "uri",
+        type: "string",
+      },
+    ],
+    name: "safeMint",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "payable",
     type: "function",
   },
   {
@@ -412,27 +419,7 @@ export const Cutomizing_piece_abi: any = [
       },
       {
         internalType: "uint256",
-        name: "newMintLimitPerBlock",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "newMintLimitPerSale",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
         name: "newMintStartBlockNumber",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "newMintIndexForSale",
-        type: "uint256",
-      },
-      {
-        internalType: "uint256",
-        name: "newMaxSaleAmount",
         type: "uint256",
       },
       {
@@ -541,8 +528,9 @@ export const Cutomizing_piece_abi: any = [
     type: "function",
   },
 ]
+//0x0E32207E91f72918920B3AeF231e2c328e45Fa25
+export const Puzzle_M_contractAddress_low: string =
+  "0x0e32207e91f72918920B3aef231e2c328e45fa25"
 
-export const Cutomizing_piece_contractAddress: string =
-  "0xa45498aa6904a2cE3C362455C60B100C474db209"
-export const Cutomizing_piece_contractAddress_low: string =
-  "0xa45498aa6904a2ce3C362455c60b100C474db209"
+  export const Puzzle_M_contractAddress: string =
+  "0x0E32207E91f72918920B3AeF231e2c328e45Fa25"

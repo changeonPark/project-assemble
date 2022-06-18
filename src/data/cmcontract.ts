@@ -528,7 +528,9 @@ export const Customizing_M_abi: any = [
   },
 ]
 
-export const Customizing_M_contractAddress: string =
+export const Customizing_M_contractAddress_low: string =
   "0xc7b5022a940e4dce2400353da17214890f417ff0"
+  export const Customizing_M_contractAddress: string =
+  "0xC7B5022A940e4dce2400353da17214890f417fF0"
 
 //0xC7B5022A940e4dce2400353da17214890f417fF0
