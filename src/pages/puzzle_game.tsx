@@ -7,8 +7,8 @@ import Puzzle_slideContainer from "puzzle_slide"
 const puzzle_game: NextPage = () => {
   return (
     <Layout title="Customizing" hasHeader>
-      {/* <Puzzle_gameContainer /> */}
-      <Puzzle_slideContainer/>
+      <Puzzle_gameContainer />
+      {/* <Puzzle_slideContainer/> */}
     </Layout>
   )
 }
